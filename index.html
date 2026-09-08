@@ -102,14 +102,45 @@ Error generating stack: `+l.message+`
         background: #2e6fa8;
         outline: none;
       }
+      /* Blog and diagnostic share a clear, accessible floating-button treatment. */
+      .db-home-nav {
+        position: fixed;
+        top: auto;
+        right: 22px;
+        bottom: 82px;
+        gap: 0;
+      }
+      .db-home-nav a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #102c52;
+        color: #fff !important;
+        box-shadow: 0 10px 30px rgba(7,28,56,0.28);
+        border: 1px solid rgba(255,255,255,0.08);
+      }
+      .db-home-nav a:hover,
+      .db-home-nav a:focus-visible {
+        background: #d84a3a;
+        color: #fff !important;
+        transform: translateY(-2px);
+      }
+      /* The final contact CTA must remain white in both French and Chinese. */
+      #root a[href^="mailto:"] {
+        color: #fff !important;
+      }
+      #root a[href^="mailto:"]:hover,
+      #root a[href^="mailto:"]:focus-visible {
+        color: #fff !important;
+      }
       @media (max-width: 520px) {
         .db-home-nav {
-          top: 14px;
-          right: 14px;
+          right: 16px;
+          bottom: 76px;
         }
         .db-home-nav a {
-          font-size: 14px;
-          padding: 7px 10px;
+          font-size: 13px;
+          padding: 10px 15px;
         }
       }
     </style>
