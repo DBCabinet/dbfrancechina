@@ -1,0 +1,43 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloudflare-pages-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy static site
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify website structure
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f index.html
+          test -f blog/index.html
+          test -f assets/index-DN0pKykc.css
+          test -f assets/index-Dptol0Sx.js
+          test -f images/db-conseil-logo-dark-v2_799c9d83.png
+          test -f images/db-horizon-hero_05533bc8.png
+          test -f images/wechat-qr_3f85322b.jpg
+          echo "Website structure verified."
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy . --project-name=db-cabinet-de-conseil --branch=main
